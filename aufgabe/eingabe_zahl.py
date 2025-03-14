@@ -1,20 +1,20 @@
 def eingabe_zahl(prompt, min_val = None, max_val = None, return_type = float):
-    eingabe = input(prompt)
+    while True:
+        eingabe = input(prompt)
 
-    try:
-        zahl = return_type(eingabe)
+        try:
+            zahl = return_type(eingabe)
 
-        if min_val is not None and zahl < min_val:
-            print(f"Die Zahl muss mindestens {min_val} sein!")
-            return None
+            if min_val is not None and zahl < min_val:
+                print(f"Die Zahl muss mindestens {min_val} sein!")
+                continue
 
-        if max_val is not None and zahl > max_val:
-            print(f"Die Zahl darf höchstens {max_val} sein!")
-            return None
+            if max_val is not None and zahl > max_val:
+                print(f"Die Zahl darf höchstens {max_val} sein!")
+                continue
 
-        return zahl
+            return zahl
 
-    except (ValueError, TypeError):
-        print("Ungültige Eingabe. Bitte eine gültige Zahl eingeben!")
-        return None
+        except (ValueError, TypeError):
+            print(f"Ungültige Eingabe '{eingabe}'. Bitte eine gültige Zahl eingeben!")
 
