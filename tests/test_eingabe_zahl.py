@@ -34,16 +34,16 @@ class TestEingabeZahl(unittest.TestCase):
 
     @patch('builtins.input', side_effect = ['-2', '5'])
     @patch('builtins.print')
-    def test_eingabe_unter_minimalwert(self, mock_print, mock_input, min_val = -1):
+    def test_eingabe_unter_minimalwert(self, mock_print, mock_input):
         result = eingabe_zahl("Geben Sie eine Zahl ein: ", min_val = -1, max_val = 10, return_type = int)
-        mock_print.assert_called_once_with(f"Die Zahl muss mindestens {min_val} sein!")
+        mock_print.assert_called_once_with("Die Zahl muss mindestens -1 sein!")
         self.assertEqual(result, 5)
 
     @patch('builtins.input', side_effect = ['20', '10'])
     @patch('builtins.print')
-    def test_eingabe_ueber_maximalwert(self, mock_print, mock_input, max_val = 15):
+    def test_eingabe_ueber_maximalwert(self, mock_print, mock_input):
         result = eingabe_zahl("Geben Sie eine Zahl ein: ", min_val = 1, max_val = 15, return_type = int)
-        mock_print.assert_any_call(f"Die Zahl darf höchstens {max_val} sein!")
+        mock_print.assert_any_call("Die Zahl darf höchstens 15 sein!")
         self.assertEqual(result, 10)
 
     @patch('builtins.input', side_effect = [[], '5'])

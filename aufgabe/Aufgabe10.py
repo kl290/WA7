@@ -1,8 +1,8 @@
-print("Taschenrechner!")
-print("Berechnungen: +, -, *, /")
+from eingabe_zahl import eingabe_zahl
 
-
-from .eingabe_zahl import eingabe_zahl
+if __name__ == "__main__":
+    print("Taschenrechner!")
+    print("Berechnungen: +, -, *, /")
 
 
 def addition(zahl1, zahl2):

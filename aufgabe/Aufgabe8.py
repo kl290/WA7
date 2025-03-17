@@ -1,6 +1,3 @@
-print("Durchschnittsberechner")
-
-
 def eingabe_zahlen():
     while True:
         eingabe = input("Bitte gib die Zahlen ein, getrennt durch Leerzeichen: ").strip()
@@ -15,8 +12,10 @@ def eingabe_zahlen():
             print("Bitte gib gültige Zahlen ein.")
 
 
+if __name__ == '__main__':
+    print("Durchschnittsberechner")
 
-zahlen = eingabe_zahlen()
+    zahlen = eingabe_zahlen()
 
-durchschnitt = sum(zahlen) / len(zahlen)
-print(f"Der Durchschnitt der eingegebenen Zahlen ist: {durchschnitt}")
+    durchschnitt = sum(zahlen) / len(zahlen)
+    print(f"Der Durchschnitt der eingegebenen Zahlen ist: {durchschnitt}")

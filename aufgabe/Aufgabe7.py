@@ -1,6 +1,7 @@
-print("Multiplikationstabelle ( kleines 1-mal-1 )")
+from eingabe_zahl import eingabe_zahl
 
-from .eingabe_zahl import eingabe_zahl
+if __name__ == "__main__":
+    print("Multiplikationstabelle ( kleines 1-mal-1 )")
 
 zahl = eingabe_zahl("Bitte gib eine Zahl ein: ")
 

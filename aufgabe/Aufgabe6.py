@@ -1,20 +1,22 @@
 import random
 
-zufallszahl = random.randint(1, 100)
-print("Ich habe eine Zahl zwischen 1 und 100 gewählt. Versuche, sie zu erraten!")
-geraten = False
-while not geraten:
-    try:
-        rateversuch = int(input("Gib deine Schätzung ein: "))
+from eingabe_zahl import eingabe_zahl
 
-        if rateversuch < 1 or rateversuch > 100:
-            print("Deine Zahl liegt außerhalb des gültigen Bereichs (1-100).")
-        elif rateversuch < zufallszahl:
+if __name__ == "__main__":
+    min_val = 1
+    max_val = 100
+
+    zufallszahl = random.randint(min_val, max_val)
+    print(f"Ich habe eine Zahl zwischen {min_val} und {max_val} gewählt. Versuche, sie zu erraten!")
+
+    geraten = False
+    while not geraten:
+        rateversuch = eingabe_zahl(f"Gib deine Schätzung ein ({min_val}-{max_val}): ")
+
+        if rateversuch < zufallszahl:
             print("Zu niedrig!")
         elif rateversuch > zufallszahl:
             print("Zu hoch!")
         else:
             print("Glückwunsch! Du hast die richtige Zahl erraten.")
-            break
-    except ValueError:
-        print("Bitte gib gültige Zahlen ein.")
+            geraten = True
