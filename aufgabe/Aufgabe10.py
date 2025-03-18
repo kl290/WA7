@@ -43,7 +43,7 @@ def taschenrechner():
 
         ergebnis = operationen[operation](zahl1, zahl2)
 
-        print(f"Das Ergebnis ist: {ergebnis}")
+        print(f"Das Ergebnis ist: {zahl1} {operation} {zahl2} = {ergebnis}")
         break
 
 

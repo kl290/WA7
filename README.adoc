@@ -1,209 +1,190 @@
-== Unit Tests in Python (mit pytest)
-*_08.01.-10.01.2025_: Mithilfe dieser Anleitung (https://dev-supp.de/unit-testing-python-pytest/ )
-ersten Tests (pytest) erstellt. +
-Erste Übung: +
-`def add(a, b): +
-return a + b` +
-die dazugehörige Testfunktion: +
-`def test_add(): +
-assert add(1, 2) == 3 +
-assert add(-1, 1) == 0 +
-assert add(-1, -1) == -2` +
-Ergebnis (ausgeführt im Terminal): +
-`collected 1 item +
-Unittest/test_math.py . +
-[100%] +
-1 passed in 0.09s` +
-Erklärung der Ausgabe:* +
-`1 passed in 0.09s` : Dieser Teil sagt aus, dass 1 Test durchgeführt wurde und dieser
-Test erfolgreich war (also bestanden hat). Die gesamte Testdauer war 0,09 Sekunden. +
-`. (Punkt)`: Ein Punkt bedeutet, dass der Test ohne Fehler durchgelaufen ist. +
-`collected 1 item`: Es wurde ein Test erfasst und ausgeführt. +
-+
+## Unit Tests in Python mit pytest & unittest
 
-*Zweite Übung: +
-Wie fällt der Test aus, wenn ich die add Funktion verändere? +
-`def add(a, b): +
-return a - b` +
-Ausgabe:* +
-`def test_add(): +
->       assert add(1, 2) == 3 +
-E       assert -1 == 3 +
-E        +  where -1 = add(1, 2) +
-1 failed in 0.10s` +
+##### | Author:  Kevin Lehmann | +
+##### | Aufgabe:   (Wochen)Aufgabe 7 "Modularisierung"| +
 
-*Erklärung der Ausgabe:* +
-`E assert -1 == 3` : Hier sehen wir die Fehlermeldung, die den Fehler beschreibt. +
-Der Test erwartet, dass add(1, 2) 3 zurückgibt, aber stattdessen
-gab die Funktion den Wert -1 zurück. Dies bedeutet, dass die Implementierung
-der Funktion add *nicht korrekt* ist. +
-`1 failed in 0.10s` : Am Ende zeigt die Zeile an, dass 1 Test fehlgeschlagen
-ist und dass der Test insgesamt nur 0,10 Sekunden gedauert hat.
-+
+### 08.01.-10.01.2025: Erste Schritte mit pytest
 
-*Dritte Übung:* +
-Wie kann man einen Test schreiben, der überprüft, ob die Funktion bei einer Division
-durch Null einen ValueError auslöst? +
+#### Grundlagen
+**Erster Test mit pytest:**
 
-*Funktion:* +
-`def divide(a, b): +
-if b == 0: +
-raise ValueError("Division durch Null ist nicht erlaubt") +
-return a / b` +
+```python
+# Funktion
+def add(a, b):
+    return a + b
 
-*die dazugehörige Testversion:* +
-`import pytest +
-from test_div import divide +
-def test_divide(): +
-with pytest.raises(ValueError): +
-divide(1, 0)` +
+# Testfunktion
+def test_add():
+    assert add(1, 2) == 3
+    assert add(-1, 1) == 0
+    assert add(-1, -1) == -2
+```
 
-*im Terminal ausführen:* +
-`pytest "Datei die gesendet werden soll"`
+**Ausführung im Terminal:**
+```bash
+pytest test_math.py
+```
+**Ergebnis:**
+```
+collected 1 item
+Unittest/test_math.py .
+[100%]
+1 passed in 0.09s
+```
 
-*Ausgabe:* +
-`collected 1 item +
-Unittest_divide.py . +
-1 passed in 0.06s` +
+### Erklärung der Ausgabe
+- **`1 passed in 0.09s`**: Ein Test wurde erfolgreich durchgeführt.
+- **`.` (Punkt)**: Bedeutet, dass der Test fehlerfrei durchgelaufen ist.
+- **`collected 1 item`**: Ein Test wurde erfasst und ausgeführt.
 
+---
 
-== *Übung an Bibliotheksfunktion: (Unittest)* +
-(Hinweis: Zum Ausführen eines Unittest mit p folgendes
-im Terminal eingeben:) +
-`python3 -m unittest test_eingabe.py` +
-( Auf den richtigen Pfad achten, sonst wird die Datei nicht gefunden)
+### Zweite Übung: Test bei falscher Implementierung
 
-*Test schreiben für diese Funktion:* +
-`def eingabe_zahl(prompt): +
-while True: +
-try: +
-return float(input(prompt)) +
-except ValueError: +
-print("Ungültige Eingabe. Bitte eine gültige Zahl eingeben!")` +
-+
+Was passiert, wenn die Funktion verändert wird?
+```python
+def add(a, b):
+    return a - b
+```
+**Testausgabe:**
+```
+E       assert -1 == 3
+E        +  where -1 = add(1, 2)
+1 failed in 0.10s
+```
 
-*1. Vorgehen:* +
-`import unittest` +
-`from unittest.mock import patch`
+### Erklärung der Fehlermeldung
+- **`E assert -1 == 3`**: Der Test erwartete `3`, aber die Funktion gab `-1` zurück.
+- **`1 failed in 0.10s`**: Ein Test schlug fehl.
 
-`from eingabe import eingabe_zahl` +
-Die Zeile from unittest.mock import patch ist notwendig, um das Mocking-Werkzeug von
-Python zu verwenden, insbesondere die patch()-Funktion. +
+---
 
-Im Testcode, den du gezeigt hast, möchtest du die Eingabefunktion `input()` simulieren,
-damit der Test automatisch abläuft, ohne dass du tatsächlich Benutzereingaben machen musst.
-Dafür wird `patch()` verwendet.
-+
+### Dritte Übung: Test auf ValueError (z. B. Division durch Null)
 
-*2. Vorgehen:* +
-`class TestEingabeZahl(unittest):` +
-Wird verwendet, um Tests besser zu strukturieren und zu organisieren.
-So kann man Tests, die eine ähnliche Funktionalität testen
-(wie in dem Fall die Eingabe eines Werts), zusammenhalten. +
-+
+**Funktion:**
+```python
+def divide(a, b):
+    if b == 0:
+        raise ValueError("Division durch Null ist nicht erlaubt")
+    return a / b
+```
 
-*3. Vorgehen:* +
-Überprüfen, ob der eingegebene Wert auch zurückgegeben wird. +
-`@patch('builtins.input', return_value='5') +
-def test_gueltige_eingabe(self, mock_input): +
-result = eingabe_zahl("Gib eine Zahl ein: ") +
-self.assertEqual(result, 5.0)`
+**Testfunktion:**
+```python
+import pytest
+from test_div import divide
 
-`@patch` : Im normalen Betrieb würde input() auf eine echte Benutzereingabe warten,
-aber im Test möchte man dies vermeiden, da man keine Benutzerinteraktion will, daher
-nutzt man @patch. +
+def test_divide():
+    with pytest.raises(ValueError):
+        divide(1, 0)
+```
 
-`builtins` : Sammlung von Funktionen die immer verfügbar sind ohne das man importieren
-muss (`print(), len(), input(), str()`) +
+**Ausführung:**
+```bash
+pytest test_divide.py
+```
+**Ergebnis:**
+```
+collected 1 item
+Unittest_divide.py .
+1 passed in 0.06s
+```
 
-`assertEqual()` : ist eine Methode die verwendet wird,
-um zu überprüfen, ob zwei Werte gleich sind. +
-+
+---
 
-*4. Vorgehen:* +
-Soll Überprüfen, das eine ungültige Eingabe eine Fehlermeldung oder
-Wiederholung auslöst und bei einer gültigen Zahl diese ausgibt. +
+### 13.01.-15.01.2025: Unittests mit unittest
 
-`@patch('builtins.input', side_effect=['abc', '3.14']) +
-def test_ungueltige_eingabe(self, mock_input): +
-result = eingabe_zahl("Gib eine Zahl ein: ") +
-self.assertEqual(result, 3.14)` +
+##### Test für eine Eingabefunktion
 
-side_effect=['abc', '3.14']: Das side_effect-Attribut ermöglicht es, +
-für jeden Aufruf von input() eine vorgegebene Eingabe zu simulieren. +
-In diesem Fall wird die input()-Funktion beim ersten Aufruf mit dem Wert 'abc' und
-beim zweiten Aufruf mit dem Wert '3.14' zurückgegeben.
+**Funktion:**
+```python
+def eingabe_zahl(prompt):
+    while True:
+        try:
+            return float(input(prompt))
+        except ValueError:
+            print("Ungültige Eingabe. Bitte eine gültige Zahl eingeben!")
+```
 
-'abc' simuliert eine ungültige Eingabe, die vermutlich eine Fehlermeldung +
-auslöst oder eine Wiederholung der Eingabeaufforderung verursacht. +
-'3.14' simuliert eine gültige Eingabe, die dann weiterverarbeitet wird.
-+
+**Test mit unittest:**
+```python
+import unittest
+from unittest.mock import patch
+from eingabe import eingabe_zahl
 
-*5. Vorgehen:* +
-Der Test soll nur dann ausgeführt werden, wenn das Skript direkt gestartet wird. +
-`if __name__ == '__main__': +
-unittest.main()` +
-+
-+
+class TestEingabeZahl(unittest.TestCase):
 
-*_13.01.-15.01.2025_:* +
--Weg finden Option Float und Int +
--einbauen von rage +
+    @patch('builtins.input', return_value='5')
+    def test_gueltige_eingabe(self, mock_input):
+        result = eingabe_zahl("Gib eine Zahl ein: ")
+        self.assertEqual(result, 5.0)
 
-Erweiterung der zahl_eingabe Funktion: +
+    @patch('builtins.input', side_effect=['abc', '3.14'])
+    def test_ungueltige_eingabe(self, mock_input):
+        result = eingabe_zahl("Gib eine Zahl ein: ")
+        self.assertEqual(result, 3.14)
 
-`def eingabe_zahl(prompt, min_val=None, max_val=None, return_type=float): +
-while True: +
-try: +
-eingabe = input(prompt) +
-if return_type == int: +
-zahl = int(eingabe) +
-else: +
-zahl = float(eingabe) +
-if min_val is not None and zahl < min_val: +
-print(f"Die Zahl muss mindestens {min_val} sein!") +
-continue +
-if max_val is not None and zahl > max_val: +
-print(f"Die Zahl darf höchstens {max_val} sein!") +
-continue +
-return zahl +
-except ValueError: +
-print("Ungültige Eingabe. Bitte eine gültige Zahl eingeben!")` +
+if __name__ == '__main__':
+    unittest.main()
+```
 
+**Erklärung:**
+- **`@patch('builtins.input', return_value='5')`**: Simuliert eine Eingabe von `5`.
+- **`side_effect=['abc', '3.14']`**: Erst eine falsche Eingabe (`abc`), dann eine richtige (`3.14`).
+- **`assertEqual(result, 3.14)`**: Prüft, ob die Funktion korrekt auf ungültige Eingaben reagiert.
 
-*Funktionsdefinition und Parameter (range)* +
-`def eingabe_zahl(prompt, min_val=None, max_val=None):` +
-min_val=None und max_val=None: Diese optionalen Parameter sind dazu da,
-einen minimalen bzw. maximalen Wert zu definieren, den die Zahl haben darf.
-Sie haben standardmäßig den Wert None, was bedeutet, dass keine Einschränkungen
-auf die Zahl angewendet werden, wenn der Benutzer diese Parameter nicht angibt. +
+**Unittest ausführen:**
+```bash
+python3 -m unittest test_eingabe.py
+```
 
-*Überprüfung des minimalen Wertes (min_val)* +
-`if min_val is not None and zahl < min_val: +
-print(f"Die Zahl muss mindestens {min_val} sein!") +
-continue` +
+---
 
-*Überprüfung des maximalen Wertes (max_val)* +
-`if max_val is not None and zahl > max_val: +
-print(f"Die Zahl darf höchstens {max_val} sein!") +
-continue` +
+### 12.03.-14.03.2025: Erweiterung der Eingabefunktion
 
-Möglichkeit eine range einzubauen die beispielsweise in Aufgabe 5 aus der
-Wochenaufgabe5 benötigt wird: +
-`def eingabe_zahl(prompt, min_val=1, max_val=100):` +
+##### Eingabe mit Bereichsprüfung (Range) und Datentypwahl
 
-Sobald dies nicht mehr benötigt wird, kann man es wieder ändern zu: +
-`def eingabe_zahl(prompt, min_val=None, max_val=None):`
+**Erweiterte Funktion:**
+```python
+def eingabe_zahl(prompt, min_val = None, max_val = None, return_type = float):
+    while True:
+        eingabe = input(prompt)
 
-Möglichkeit zwischen float und int Eingaben: +
-`return_type=float):` oder `return_type=int):` um keine Dezimalzahlen zu erlauben
+        try:
+            zahl = return_type(eingabe)
 
-*_12.03.-14.03.2025_:* +
+            if min_val is not None and zahl < min_val:
+                print(f"Die Zahl muss mindestens {min_val} sein!")
+                continue
 
+            if max_val is not None and zahl > max_val:
+                print(f"Die Zahl darf höchstens {max_val} sein!")
+                continue
 
-+
-+
-+
+            return zahl
 
-_Unittest im Terminal ausführbar machen mit: python3 test_eingabe.py +
-Pytest im Terminal ausführbar machen mit: pytest test_eingabe.py_
+        except (ValueError, TypeError):
+            print(f"Ungültige Eingabe '{eingabe}'. Bitte eine gültige Zahl eingeben!")
+```
+
+#### Parametererklärung
+- **`min_val=None, max_val=None`**: Optional, um einen Wertebereich zu definieren.
+- **`return_type=float`**: Ermöglicht die Wahl zwischen Ganzzahlen (`int`) und Fließkommazahlen (`float`).
+- **Eingabeprüfung:**
+- Gibt eine Fehlermeldung aus, wenn der Wert außerhalb des definierten Bereichs liegt.
+- Wiederholt die Eingabeaufforderung, falls eine falsche Eingabe gemacht wird.
+
+---
+
+### Tests ausführen
+
+**Unittests im Terminal:**
+```bash
+python3 test_eingabe.py
+```
+
+**Pytest im Terminal:**
+```bash
+pytest test_eingabe.py
+```
+

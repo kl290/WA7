@@ -1,4 +1,4 @@
-eingabe = input("Bitte geben Sie ein Wort ein: ")
+eingabe = input('Bitte geben Sie eine Zeichenfolge ein:')
 
 
 def ist_palindrom(s):
@@ -8,7 +8,7 @@ def ist_palindrom(s):
 eingabe = eingabe.lower().replace(" ", "")
 
 if not eingabe:
-    print("Die leere Eingabe wird nicht als Palindrom gewertet.")
+    print('Die leere Eingabe wird nicht als Palindrom gewertet.')
 
 else:
     if ist_palindrom(eingabe):

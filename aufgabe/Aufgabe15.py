@@ -1,18 +1,14 @@
-def woerter_zaehlen():
+if __name__ == "__main__":
     eingabe = input("Bitte einen Text eingeben: ")
-    woerter = eingabe.split()
 
-    anzahl_zahlen = sum(1 for wort in eingabe.split() if wort.isdigit())
+    woerter = eingabe.split()
     haeufigkeit = {}
 
     for wort in woerter:
         wort = wort.strip(".,!?;:()\"")
-        if wort:
+        if wort.isalpha():
             wort = wort.lower()
             haeufigkeit[wort] = haeufigkeit.get(wort, 0) + 1
 
-
-    print(f"Der Text enthält {len(woerter)} Wörter, und {anzahl_zahlen} Zahlen insgesamt.")
-    print("Häufigkeit der Wörter:", haeufigkeit)
-
-woerter_zaehlen()
+            print(f"Der Text enthält {len(woerter)} Wörter.")
+            print("Häufigkeit der Wörter:", haeufigkeit)
