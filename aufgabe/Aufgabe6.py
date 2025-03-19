@@ -11,7 +11,7 @@ if __name__ == "__main__":
 
     geraten = False
     while not geraten:
-        rateversuch = eingabe_zahl(f"Gib deine Schätzung ein ({min_val}-{max_val}): ")
+        rateversuch = eingabe_zahl(f"Gib deine Schätzung ein ({min_val}-{max_val}): ",1,100, int)
 
         if rateversuch < zufallszahl:
             print("Zu niedrig!")

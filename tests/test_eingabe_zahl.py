@@ -15,7 +15,7 @@ class TestEingabeZahl(unittest.TestCase):
     @patch('builtins.print')
     def test_bei_ungueltiger_int(self, mock_print, mock_input):
         result = eingabe_zahl("Geben Sie eine Zahl ein: ", return_type = int)
-        mock_print.assert_called_once_with(f"Ungültige Eingabe '7.5'. Bitte eine gültige Zahl eingeben!")
+        mock_print.assert_called_once_with("Ungültige Eingabe '7.5'. Bitte eine gültige Zahl eingeben!")
         self.assertEqual(result, 5)
 
     @patch('builtins.input', return_value = '7.5')

@@ -1,7 +1,7 @@
 from eingabe_zahl import eingabe_zahl
 
 if __name__ == "__main__":
-    punkte = eingabe_zahl("Geben Sie eine Punktezahl zwischen 0 und 100 ein: ")
+    punkte = eingabe_zahl("Geben Sie eine Punktezahl zwischen 0 und 100 ein: ", 0, 100)
 
     n = "Die Note lautet:"
     if punkte >= 90:
